@@ -1,19 +1,19 @@
-// api
-
 var Todo = require('./models/todo');
 
-module.exports = function(app){
+module.exports = function(app) {
 
+    // api ---------------------------------------------------------------------
     // get all todos
-    app.get('/api/todos', function(req, res){
-        // use mongoose to get all todos in the database
-        Todo.find(function(err, todos){
-            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-            if(err){
-                res.send(err);
-            }
+    app.get('/api/todos', function(req, res) {
 
-            res.json(todos); // return all todos
+        // use mongoose to get all todos in the database
+        Todo.find(function(err, todos) {
+
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err)
+
+            res.json(todos); // return all todos in JSON format
         });
     });
 
@@ -31,10 +31,11 @@ module.exports = function(app){
             // get and return all the todos after you create another
             Todo.find(function(err, todos) {
                 if (err)
-                    res.send(err);
+                    res.send(err)
                 res.json(todos);
             });
         });
+
     });
 
     // delete a todo
@@ -48,15 +49,14 @@ module.exports = function(app){
             // get and return all the todos after you create another
             Todo.find(function(err, todos) {
                 if (err)
-                    res.send(err);
+                    res.send(err)
                 res.json(todos);
             });
         });
     });
 
-    //application
-    app.get('*', function(req, res){
-        // load the single view file (angular will handle the page changes on the front-end)
-        res.sendfile('./public/index.html');
+    // application -------------------------------------------------------------
+    app.get('*', function(req, res) {
+        res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
     });
 };
